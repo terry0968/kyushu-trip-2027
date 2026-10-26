@@ -1,0 +1,9 @@
+# local-only files
+*.png
+screenshot-*
+deploy.sh
+deploy-gh.sh
+*token*
+.env
+.env.*
+.config/
