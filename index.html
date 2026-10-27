@@ -146,6 +146,9 @@
     .event-marker { z-index: 1; display: grid; width: 32px; height: 32px; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--coral); font-size: 14px; }
     .event-time { padding-top: 3px; font-weight: 700; white-space: nowrap; }
     .event-body h4 { display: inline; margin: 0; font-size: 17px; }
+    .map-link { display: inline; color: inherit; text-decoration: underline dotted #958b7e 1.5px; text-underline-offset: 3px; }
+    .map-link:hover { color: #527b65; text-decoration-style: solid; }
+    .map-link svg { width: 15px; height: 15px; vertical-align: -2px; }
     .event-body p { margin: 4px 0 0; color: #605b55; font-size: 14px; line-height: 1.6; }
     .event-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
     .transport { display: inline-block; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--blue); padding: 0 9px; font-size: 12px; line-height: 1.6; }
@@ -349,7 +352,7 @@
         <article class="stay-card">
           <div class="stay-city"><h3>熊本・3 晚</h3><span class="stay-date">2/28 入住 → 3/3 退房</span></div>
           <dl class="stay-meta">
-            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong>KOKO HOTEL Premier 熊本</strong>：與桜町巴士總站相連，抵達後少搬行李。</li><li><strong>CANDEO HOTELS 熊本新市街</strong>：辛島町電車站步行約 3 分鐘。</li></ul></dd></div>
+            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=KOKO%20HOTEL%20Premier%20%E7%86%8A%E6%9C%AC" target="_blank" rel="noopener noreferrer">KOKO HOTEL Premier 熊本</a></strong>：與桜町巴士總站相連，抵達後少搬行李。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=CANDEO%20HOTELS%20%E7%86%8A%E6%9C%AC%E6%96%B0%E5%B8%82%E8%A1%97" target="_blank" rel="noopener noreferrer">CANDEO HOTELS 熊本新市街</a></strong>：辛島町電車站步行約 3 分鐘。</li></ul></dd></div>
             <div><dt>入住與地址</dt><dd>時間、地址尚待確認；辦理入住前可先詢問行李寄放。</dd></div>
             <div><dt>住宿提醒</dt><dd>素泊方案；熊本市住宿稅約每人每晚 ¥200。</dd></div>
           </dl>
@@ -357,7 +360,7 @@
         <article class="stay-card">
           <div class="stay-city"><h3>福岡・3 晚</h3><span class="stay-date" style="background:var(--coral)">3/3 入住 → 3/6 退房</span></div>
           <dl class="stay-meta">
-            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong>Richmond Hotel 福岡天神</strong>：天神南站出口步行約 1 分鐘。</li><li><strong>東急 STAY 福岡天神</strong>：鄰近天神南站，客房設有洗衣烘衣設備。</li><li><strong>Cross Life 博多天神</strong>：天神南站步行可達，館內有大浴場。</li><li><strong>西鐵 CROOM 博多祇園</strong>：櫛田神社前站旁，往博多交通方便。</li></ul></dd></div>
+            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Richmond%20Hotel%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">Richmond Hotel 福岡天神</a></strong>：天神南站出口步行約 1 分鐘。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Tokyu%20Stay%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">東急 STAY 福岡天神</a></strong>：鄰近天神南站，客房設有洗衣烘衣設備。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cross%20Life%20Hakata%20Tenjin" target="_blank" rel="noopener noreferrer">Cross Life 博多天神</a></strong>：天神南站步行可達，館內有大浴場。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Nishitetsu%20Hotel%20Croom%20Hakata%20Gion" target="_blank" rel="noopener noreferrer">西鐵 CROOM 博多祇園</a></strong>：櫛田神社前站旁，往博多交通方便。</li></ul></dd></div>
             <div><dt>入住與地址</dt><dd>時間、地址尚待確認；熊本至福岡移動日確認行李寄送安排。</dd></div>
             <div><dt>住宿提醒</dt><dd>福岡住宿稅約每人每晚 ¥200。博多交通轉乘較便捷；天神方便逛街及夜間用餐。</dd></div>
           </dl>
@@ -378,32 +381,32 @@
       {
         date: "2/28", weekday: "週日", city: "熊本", title: "抵達熊本・先安頓再出發", icon: "✈",
         events: [
-          { time: "10:35", transport: ["飛機"], title: "抵達熊本機場 KMJ", text: "搭乘 JX846 抵達，辦理入境與領取行李，預留通關時間。" },
-          { time: "約 11:30", transport: ["機場巴士"], title: "搭利木津巴士進市區", text: "可在通町筋或桜町巴士總站下車。快速車程約 40–45 分、一般班次約 50–55 分；行李較多可評估分乘計程車。" },
+          { time: "10:35", transport: ["飛機"], title: "抵達熊本機場 KMJ", map: "Aso Kumamoto Airport", text: "搭乘 JX846 抵達，辦理入境與領取行李，預留通關時間。" },
+          { time: "約 11:30", transport: ["機場巴士"], title: "搭利木津巴士進市區", map: "Sakuramachi Bus Terminal Kumamoto", text: "可在通町筋或桜町巴士總站下車。快速車程約 40–45 分、一般班次約 50–55 分；行李較多可評估分乘計程車。" },
           { time: "中午", transport: ["步行"], title: "飯店寄放行李", text: "先至下通、新市街一帶的旅宿寄放行李，稍作休息。" },
-          { time: "午餐", transport: ["步行"], title: "桜町商場簡單用餐", text: "桜町巴士總站樓上有餐飲選擇，適合抵達日彈性安排。" },
-          { time: "下午", transport: ["市電"], title: "水前寺成趣園（彈性）", text: "搭市電約 20 分鐘；若旅途疲累，可改在下通商店街附近輕鬆走走。" },
-          { time: "晚餐", transport: ["步行"], title: "下通、上通商圈", text: "可找熊本拉麵、太平燕等在地料理，依家人喜好選擇。" }
+          { time: "午餐", transport: ["步行"], title: "桜町商場簡單用餐", map: "Sakuramachi Kumamoto", text: "桜町巴士總站樓上有餐飲選擇，適合抵達日彈性安排。" },
+          { time: "下午", transport: ["市電"], title: "水前寺成趣園（彈性）", map: "Suizenji Jojuen Kumamoto", text: "搭市電約 20 分鐘；若旅途疲累，可改在下通商店街附近輕鬆走走。" },
+          { time: "晚餐", transport: ["步行"], title: "下通、上通商圈", map: "Shimotori Kamitori Kumamoto", text: "可找熊本拉麵、太平燕等在地料理，依家人喜好選擇。" }
         ]
       },
       {
         date: "3/1", weekday: "週一", city: "熊本", title: "熊本城與城下町散策", icon: "城",
         alert: "城內部分區域可能因修復工程調整動線；出發前請查看熊本城與城彩苑最新公告。",
         events: [
-          { time: "09:00", transport: ["周遊巴士", "計程車"], title: "熊本城開園散步", must: true, text: "早點抵達可避開人潮；依現場指示選擇入口。可詢問售票處是否提供嬰兒車或輔具。" },
-          { time: "午餐", transport: ["步行"], title: "城彩苑・桜の小路", text: "在城下街區品嚐熊本小吃、補充點心，也能順道逛伴手禮店。" },
+          { time: "09:00", transport: ["周遊巴士", "計程車"], title: "熊本城開園散步", map: "Kumamoto Castle", must: true, text: "早點抵達可避開人潮；依現場指示選擇入口。可詢問售票處是否提供嬰兒車或輔具。" },
+          { time: "午餐", transport: ["步行"], title: "城彩苑・桜の小路", map: "Sakuranobaba Josaien Kumamoto", text: "在城下街區品嚐熊本小吃、補充點心，也能順道逛伴手禮店。" },
           { time: "下午", transport: ["周遊巴士", "計程車"], title: "回住宿處休息", text: "預留休息空檔給長輩與幼兒，依精神狀況再決定是否外出。" },
-          { time: "傍晚", transport: ["步行"], title: "鶴屋百貨、下通散步", text: "在市中心慢慢逛；若安排熊本熊廣場，先確認地點及表演時段。" }
+          { time: "傍晚", transport: ["步行"], title: "鶴屋百貨、下通散步", map: "Tsuruya Department Store Kumamoto", text: "在市中心慢慢逛；若安排熊本熊廣場，先確認地點及表演時段。" }
         ]
       },
       {
         date: "3/2", weekday: "週二", city: "熊本", title: "阿蘇草千里一日遊", icon: "山",
         alert: "參考方案需提前預約；火山管制、天候及路面狀況可能改變停靠點。阿蘇氣溫較低，建議準備保暖衣物。",
         events: [
-          { time: "08:00", transport: ["巴士"], title: "從桜町出發往阿蘇", text: "可研究九州產交草千里一日巴士套票，參考方案含市區往返與午餐；座位與票價以官方預約頁為準。" },
-          { time: "上午", transport: ["巴士"], title: "轉往草千里地區", text: "依當日火口管制與班次安排轉乘，請預留候車與步行時間。" },
-          { time: "中午", transport: ["步行"], title: "草千里午餐與草原散步", must: true, text: "在草原周邊用餐、欣賞火山地景；騎馬等活動視營運及天候而定。" },
-          { time: "下午", transport: ["巴士"], title: "阿蘇站周邊停留", text: "依回程巴士時間安排短暫散步，留意末班車。" },
+          { time: "08:00", transport: ["巴士"], title: "從桜町出發往阿蘇", map: "Sakuramachi Bus Terminal Kumamoto", text: "可研究九州產交草千里一日巴士套票，參考方案含市區往返與午餐；座位與票價以官方預約頁為準。" },
+          { time: "上午", transport: ["巴士"], title: "轉往草千里地區", map: "Kusasenri Aso", text: "依當日火口管制與班次安排轉乘，請預留候車與步行時間。" },
+          { time: "中午", transport: ["步行"], title: "草千里午餐與草原散步", map: "Kusasenri Observatory Aso", must: true, text: "在草原周邊用餐、欣賞火山地景；騎馬等活動視營運及天候而定。" },
+          { time: "下午", transport: ["巴士"], title: "阿蘇站周邊停留", map: "Aso Station Kumamoto", text: "依回程巴士時間安排短暫散步，留意末班車。" },
           { time: "約 18:00", transport: ["巴士"], title: "回到熊本市區", text: "全天交通時間較長，若家人體力有限，考慮改為市區行程或另行安排包車。" }
         ],
         choices: [
@@ -415,26 +418,26 @@
         date: "3/3", weekday: "週三", city: "熊本→福岡", title: "搭新幹線前往博多", icon: "🚄",
         events: [
           { time: "上午", transport: ["市電", "計程車"], title: "退房，前往熊本站", text: "多人與大件行李移動時，可預先安排計程車；也可詢問飯店宅急便寄送行李。" },
-          { time: "約 32–48 分", transport: ["新幹線"], title: "九州新幹線・熊本到博多", must: true, text: "依班次選擇指定席；大件行李先確認特大行李座位規定與預約需求。" },
-          { time: "下午", transport: ["步行", "地鐵"], title: "福岡麵包超人兒童博物館", must: true, text: "位於博多 Riverain，適合親子安排；門票依日期與年齡可能不同，建議先查官方資訊。若想休息可改逛運河城。" },
-          { time: "晚餐", transport: ["步行"], title: "博多豚骨拉麵或牛腸鍋", text: "入住後於市區用餐，精神許可再散步看看中洲夜景。" }
+          { time: "約 32–48 分", transport: ["新幹線"], title: "九州新幹線・熊本到博多", map: "Kumamoto Station to Hakata Station", must: true, text: "依班次選擇指定席；大件行李先確認特大行李座位規定與預約需求。" },
+          { time: "下午", transport: ["步行", "地鐵"], title: "福岡麵包超人兒童博物館", map: "Fukuoka Anpanman Children's Museum in Mall", must: true, text: "位於博多 Riverain，適合親子安排；門票依日期與年齡可能不同，建議先查官方資訊。若想休息可改逛運河城。" },
+          { time: "晚餐", transport: ["步行"], title: "博多豚骨拉麵或牛腸鍋", map: "Hakata Fukuoka", text: "入住後於市區用餐，精神許可再散步看看中洲夜景。" }
         ]
       },
       {
         date: "3/4", weekday: "週四", city: "福岡", title: "太宰府賞梅與天神散步", icon: "梅",
         events: [
           { time: "上午", transport: ["西鐵電車"], title: "從天神搭車前往太宰府", text: "通常需在二日市轉乘；若住宿博多，可先搭地鐵或比較直達巴士。" },
-          { time: "上午", transport: ["步行"], title: "太宰府天滿宮・梅花散策", must: true, text: "從車站步行至參道與境內，沿途可試梅枝餅。花期及部分參拜動線請依現場公告。" },
-          { time: "下午", transport: ["步行", "西鐵電車"], title: "九州國立博物館或回天神", text: "想參觀博物館可預留時間；也可搭車回市區休息、逛天神地下街。" },
+          { time: "上午", transport: ["步行"], title: "太宰府天滿宮・梅花散策", map: "Dazaifu Tenmangu Shrine", must: true, text: "從車站步行至參道與境內，沿途可試梅枝餅。花期及部分參拜動線請依現場公告。" },
+          { time: "下午", transport: ["步行", "西鐵電車"], title: "九州國立博物館或回天神", map: "Kyushu National Museum Dazaifu", text: "想參觀博物館可預留時間；也可搭車回市區休息、逛天神地下街。" },
           { time: "晚餐", transport: ["步行"], title: "天神在地晚餐", text: "可選屋台、一蘭或博多水炊雞肉鍋，訂位與營業狀況請先確認。" }
         ]
       },
       {
         date: "3/5", weekday: "週五", city: "福岡", title: "親子日・海邊或市區二選一", icon: "海",
         events: [
-          { time: "全天・選項一", transport: ["JR", "船"], title: "海之中道海洋世界", text: "可搭 JR 經香椎前往，或查詢博多港船班。館內可看海豚表演；票價及演出時刻以官方公告為準。" },
-          { time: "上午・選項二", transport: ["計程車", "地鐵"], title: "大濠公園放慢腳步", text: "環湖散步、前往兒童遊戲區；視季節與花況再考慮附近公園。" },
-          { time: "下午・選項二", transport: ["計程車", "巴士"], title: "福岡塔與百道海濱", text: "海邊景點步行距離較長，建議預留休息時間並依天氣安排。" }
+          { time: "全天・選項一", transport: ["JR", "船"], title: "海之中道海洋世界", map: "Marine World Uminonakamichi", text: "可搭 JR 經香椎前往，或查詢博多港船班。館內可看海豚表演；票價及演出時刻以官方公告為準。" },
+          { time: "上午・選項二", transport: ["計程車", "地鐵"], title: "大濠公園放慢腳步", map: "Ohori Park Fukuoka", text: "環湖散步、前往兒童遊戲區；視季節與花況再考慮附近公園。" },
+          { time: "下午・選項二", transport: ["計程車", "巴士"], title: "福岡塔與百道海濱", map: "Fukuoka Tower Momochi Seaside Park", text: "海邊景點步行距離較長，建議預留休息時間並依天氣安排。" }
         ],
         choices: [
           { title: "下雨或較冷", text: "選室內的海洋世界，出發前查好往返交通與表演時間。" },
@@ -447,7 +450,7 @@
           { time: "上午", transport: ["步行"], title: "退房並寄放行李", text: "先和飯店確認行李寄放方式與取件時間。" },
           { time: "白天", transport: ["地鐵", "步行"], title: "天神、博多採買伴手禮", text: "預留整理與用餐時間，可逛車站百貨、天神地下街，選購明太子或博多點心。" },
           { time: "16:00", transport: ["步行"], title: "回飯店取行李", text: "週末交通可能較忙，預留前往機場的緩衝。" },
-          { time: "17:00 前", transport: ["巴士", "計程車"], title: "抵達福岡機場國際線", must: true, text: "可查詢博多站直達巴士，亦可預訂大型計程車；人數與行李量需先確認。" },
+          { time: "17:00 前", transport: ["巴士", "計程車"], title: "抵達福岡機場國際線", map: "Fukuoka Airport International Terminal", must: true, text: "可查詢博多站直達巴士，亦可預訂大型計程車；人數與行李量需先確認。" },
           { time: "19:10", transport: ["飛機"], title: "搭乘 JX841 返回桃園", text: "預計 20:50 抵達桃園第一航廈；報到截止資訊以星宇航空公告為準。" }
         ]
       }
@@ -492,6 +495,10 @@
       return "";
     }
 
+    function googleMapsUrl(query) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${query} Japan`)}`;
+    }
+
     function renderDay(day, index) {
       const tabId = `tab-day-${index}`;
       const panelId = `panel-day-${index}`;
@@ -517,7 +524,10 @@
       const events = day.events.map((event) => {
         const tags = event.transport.map((name) => `<span class="transport ${transportClass(name)}">${name}</span>`).join("");
         const must = event.must ? '<span class="must">必去</span>' : "";
-        return `<li class="event"><span class="event-marker" aria-hidden="true">${day.icon}</span><time class="event-time">${event.time}</time><div class="event-body"><h4>${event.title}${must}</h4><div class="event-tags">${tags}</div><p>${event.text}</p></div></li>`;
+        const title = event.map
+          ? `<a class="map-link" href="${googleMapsUrl(event.map)}" target="_blank" rel="noopener noreferrer" aria-label="在 Google 地圖開啟${event.title}（另開新分頁）">${event.title}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 4h9v9M16 4 8 12M15 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`
+          : event.title;
+        return `<li class="event"><span class="event-marker" aria-hidden="true">${day.icon}</span><time class="event-time">${event.time}</time><div class="event-body"><h4>${title}${must}</h4><div class="event-tags">${tags}</div><p>${event.text}</p></div></li>`;
       }).join("");
       const choices = day.choices ? `<div class="choice-grid" aria-label="彈性替代行程">${day.choices.map((choice) => `<div class="choice"><h4>${choice.title}</h4><p>${choice.text}</p></div>`).join("")}</div>` : "";
       panel.innerHTML = `<article class="day-card"><header class="day-title"><span class="day-illustration" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 39h34M11 39V20l13-10 13 10v19M18 39V27h12v12" fill="#FFFCF6" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M8 20h32" stroke="#3E3A39" stroke-width="3"/><circle cx="35" cy="10" r="4" fill="#F6D27A" stroke="#3E3A39" stroke-width="2"/></svg></span><div><h3>${day.date}（${day.weekday.slice(1)}）${day.title}</h3><p>Day ${index + 1}・${day.city}</p></div></header>${alert}<ol class="timeline">${events}</ol>${choices}</article>`;
