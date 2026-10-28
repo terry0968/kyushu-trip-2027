@@ -104,12 +104,30 @@ h1, h2, h3, p { margin-top: 0; }
 
 .quiz-card { min-height: 350px; padding: clamp(18px, 5vw, 34px); }
 .ready-state, .result-state { display: grid; justify-items: center; align-content: center; min-height: 280px; text-align: center; }
+.lesson-state { display: grid; align-content: start; justify-items: stretch; gap: 12px; min-height: 280px; }
 .ready-sticker, .result-star { display: grid; width: 68px; height: 68px; place-items: center; border: var(--line); border-radius: 22px; background: var(--yellow); font-size: 37px; transform: rotate(-5deg); }
 .ready-state h3, .result-state h3 { margin: 16px 0 4px; font-size: 27px; }
 .ready-state p, .result-state p { margin-bottom: 8px; }
 .ready-state > .zhuyin, .result-state > .zhuyin { margin-bottom: 5px; }
 .round-note { color: var(--muted); font-size: 14px; }
 .round-note-zhuyin { margin-bottom: 12px; font-size: 12px; }
+.course-progress { margin: 4px 0 8px !important; color: var(--muted); font-size: 14px; font-weight: 700; }
+.lesson-list { display: grid; width: min(100%, 520px); gap: 8px; }
+.lesson-card { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 2px 10px; border: 2px solid var(--ink); border-radius: 14px; background: #fffdf8; padding: 9px 12px; text-align: left; }
+.lesson-card:hover:not(:disabled) { background: #fff1c8; transform: translateY(-1px); }
+.lesson-card.is-complete { background: #edf5e6; }
+.lesson-card.is-locked { color: var(--muted); background: #f0ede7; }
+.lesson-card:disabled { cursor: not-allowed; }
+.lesson-card__number { grid-row: span 2; border-radius: 999px; background: var(--yellow); padding: 4px 8px; font-size: 12px; white-space: nowrap; }
+.lesson-card__title { font-size: 16px; font-weight: 700; }
+.lesson-card__status { color: var(--muted); font-size: 12px; }
+.progress-notice { margin: 8px 0 !important; color: var(--muted); font-size: 12px; }
+.lesson-kicker { margin: 0; color: var(--muted); font-size: 14px; }
+.lesson-state h3 { margin: 0; text-align: center; font-size: 26px; }
+.lesson-teaching, .lesson-example { margin: 0; border: 2px dashed var(--ink); border-radius: 16px; background: #fffaf0; padding: 13px 15px; }
+.lesson-example { background: #fff1c8; }
+.lesson-tip { margin: 0; color: var(--muted); text-align: center; font-size: 13px; }
+.text-button { justify-self: start; border: 0; background: transparent; padding: 2px 0; text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
 .math-mode { width: min(100%, 430px); margin: 4px 0 8px; }
 .math-mode-title { margin: 0 0 5px; font-size: 14px; font-weight: 700; }
 .math-mode-title .zhuyin { font-size: 11px; }
@@ -119,6 +137,9 @@ h1, h2, h3, p { margin-top: 0; }
 .math-mode-button .zhuyin { font-size: 10px; }
 .math-mode-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
 .math-mode-note .zhuyin { font-size: 11px; }
+.secondary-button { min-height: 42px; border: 2px solid var(--ink); border-radius: 12px; background: #fffdf8; padding: 6px 15px; font-size: 15px; }
+.secondary-button:hover { background: #fff1c8; }
+.course-return-button { margin-top: 9px; }
 .primary-button {
   display: inline-flex;
   min-height: 52px;
@@ -140,27 +161,29 @@ h1, h2, h3, p { margin-top: 0; }
 .question-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .round-label, .category-label { border: 2px solid var(--ink); border-radius: 999px; padding: 2px 10px; font-size: 14px; }
 .round-label { background: var(--blue); }
-.category-label { display: grid; background: #f8c3b9; text-align: center; }
-.category-label .zhuyin { font-size: 10px; }
+.category-label { display: inline-flex; align-items: center; background: #f8c3b9; }
 .progress-track { height: 13px; overflow: hidden; border: 2px solid var(--ink); border-radius: 999px; background: #eee8dd; }
 .progress-track span { display: block; width: 0; height: 100%; border-right: 2px solid var(--ink); background: var(--green); transition: width .25s ease; }
 .question-text { min-height: 48px; margin: 20px 0 2px; font-size: clamp(21px, 4vw, 28px); line-height: 1.45; }
-.question-zhuyin { margin: 0 0 13px; font-size: 17px; }
+.annotated-char { display: inline-grid; grid-template-columns: auto .72em; align-items: center; vertical-align: middle; line-height: 1.5; }
+.annotated-char__text { grid-column: 1; grid-row: 1; }
+.annotated-char__reading { grid-column: 2; grid-row: 1; justify-self: start; writing-mode: vertical-rl; text-orientation: upright; white-space: nowrap; color: #625e57; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; font-size: .58em; line-height: 1; letter-spacing: -.08em; }
 .answer-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .answer-option { display: grid; min-height: 60px; align-content: center; justify-items: center; gap: 2px; border: 2.5px solid var(--ink); border-radius: 15px; background: #fffdf8; padding: 8px 10px; font-size: 19px; overflow-wrap: anywhere; }
-.answer-option .zhuyin { font-size: 13px; }
+.answer-option .annotated-char__reading { font-size: .62em; }
 .answer-option:hover:not(:disabled) { background: #fff1c8; transform: translateY(-1px); }
 .answer-option:disabled { cursor: default; opacity: 1; }
 .answer-option.is-correct { background: var(--green); }
 .answer-option.is-wrong { background: #f8c3b9; }
 .answer-feedback { display: grid; min-height: 29px; gap: 2px; margin: 12px 0 4px; font-weight: 700; }
-.answer-feedback .zhuyin { margin-bottom: 5px; font-weight: 400; }
+.answer-feedback .annotated-char__reading { font-weight: 400; }
 .answer-feedback.is-wrong { color: #a14c43; }
 .next-button { display: block; margin: 10px 0 0 auto; }
 .result-score { font-size: 22px; font-weight: 700; }
+.result-state .result-message { max-width: 520px; }
 .missed-box { width: min(100%, 500px); margin: 7px 0 16px; border: 2px dashed var(--ink); border-radius: 15px; background: #fff5d8; padding: 11px 15px; text-align: left; }
 .missed-box ul { margin: 5px 0 0; padding-left: 22px; }
-.missed-box li .zhuyin { margin-bottom: 4px; font-size: 12px; }
+.missed-box li .annotated-char__reading { font-size: .5em; }
 .gentle-reminder { margin: 14px 0 0; color: var(--muted); text-align: center; font-size: 14px; }
 .zhuyin-help { margin: 9px 0 0; text-align: center; font-size: 14px; }
 .zhuyin-help .zhuyin { font-size: 13px; }

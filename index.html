@@ -25,7 +25,7 @@
       <div class="welcome-copy">
         <p class="eyebrow">一年級・每天玩一點</p>
         <h1 id="page-title">小學練習樂園<span aria-hidden="true">！</span></h1>
-        <p class="welcome-text">選一科開始闖關，答完 5 題就能領取今天的星星。</p>
+        <p class="welcome-text">選一科從第一課開始，完成教學和小測，慢慢解鎖下一課。</p>
       </div>
       <div class="mascot" aria-hidden="true">
         <svg viewBox="0 0 240 190">
@@ -51,14 +51,14 @@
         <span class="book-chip book-chip--blue">數學・南一</span>
         <span class="book-chip book-chip--green">英文・何嘉仁 Fun World (1)(2)</span>
       </div>
-      <p class="book-note">先練習一年級常見基礎概念；題目不是課本逐課題庫。若要完全對應課次，可再依課本單元調整。</p>
+      <p class="book-note">依一年級上學期常見學習方向自編，每科先提供六課入門內容；不是翰林、南一或何嘉仁課本的逐課內容。</p>
     </section>
 
     <section class="practice" aria-labelledby="practice-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">今天想玩哪一科？<span class="zhuyin zhuyin--label">ㄐㄧㄣ ㄊㄧㄢ ㄒㄧㄤˇ ㄨㄢˊ ㄋㄚˇ ㄧˋ ㄎㄜ</span></p>
-          <h2 id="practice-title">挑戰小任務<span class="zhuyin zhuyin--heading">ㄊㄧㄠˇ ㄓㄢˋ ㄒㄧㄠˇ ㄖㄣˋ ㄨˋ</span></h2>
+          <p class="eyebrow">選一科，從第一課開始<span class="zhuyin zhuyin--label">ㄒㄩㄢˇ ㄧˋ ㄎㄜ，ㄘㄨㄥˊ ㄉㄧˋ ㄧ ㄎㄜˋ ㄎㄞ ㄕˇ</span></p>
+          <h2 id="practice-title">逐課學習小教室<span class="zhuyin zhuyin--heading">ㄓㄨˊ ㄎㄜˋ ㄒㄩㄝˊ ㄒㄧˊ ㄒㄧㄠˇ ㄐㄧㄠˋ ㄕˋ</span></h2>
         </div>
         <p class="star-count" id="star-count" aria-label="累積星星" aria-live="polite">⭐ <span id="star-total">0</span></p>
       </div>
@@ -79,20 +79,33 @@
         <div class="ready-state" id="ready-state">
           <div class="ready-sticker" aria-hidden="true">✏️</div>
           <h3 id="subject-name">國語小高手</h3>
-          <span class="zhuyin zhuyin--standalone" id="subject-name-zhuyin">ㄍㄨㄛˊ ㄩˇ ㄒㄧㄠˇ ㄍㄠ ㄕㄡˇ</span>
+          <span class="zhuyin zhuyin--standalone" id="subject-name-zhuyin" hidden>ㄍㄨㄛˊ ㄩˇ ㄒㄧㄠˇ ㄍㄠ ㄕㄡˇ</span>
           <p id="subject-description">認識國字、部件和生活中的詞語。</p>
-          <span class="zhuyin zhuyin--standalone description-zhuyin" id="subject-description-zhuyin">ㄖㄣˋ ㄕˋ ㄍㄨㄛˊ ㄗˋ、ㄅㄨˋ ㄐㄧㄢˋ ㄏㄜˊ ㄕㄥ ㄏㄨㄛˊ ㄓㄨㄥ ㄉㄜ˙ ㄘˊ ㄩˇ。</span>
-          <p class="round-note">一回合 5 題・慢慢想，答錯也沒關係！</p>
-          <span class="zhuyin zhuyin--standalone round-note-zhuyin">ㄧˋ ㄏㄨㄟˊ ㄏㄜˊ ㄨˇ ㄊㄧˊ，ㄇㄢˋ ㄇㄢˋ ㄒㄧㄤˇ，ㄉㄚˊ ㄘㄨㄛˋ ㄧㄝˇ ㄇㄟˊ ㄍㄨㄢ ㄒㄧˋ！</span>
+          <span class="zhuyin zhuyin--standalone description-zhuyin" id="subject-description-zhuyin" hidden>ㄖㄣˋ ㄕˋ ㄍㄨㄛˊ ㄗˋ、ㄅㄨˋ ㄐㄧㄢˋ ㄏㄜˊ ㄕㄥ ㄏㄨㄛˊ ㄓㄨㄥ ㄉㄜ˙ ㄘˊ ㄩˇ。</span>
+          <p class="round-note">先看小課堂，再做 3 題小測；答對 2 題就能解鎖下一課。</p>
+          <span class="zhuyin zhuyin--standalone round-note-zhuyin">ㄒㄧㄢ ㄎㄢˋ ㄒㄧㄠˇ ㄎㄜˋ ㄊㄤˊ，ㄗㄞˋ ㄗㄨㄛˋ ㄙㄢ ㄊㄧˊ ㄒㄧㄠˇ ㄘㄜˋ；ㄉㄚˊ ㄉㄨㄟˋ ㄦˋ ㄊㄧˊ ㄐㄧㄡˋ ㄋㄥˊ ㄐㄧㄝˇ ㄙㄨㄛˇ ㄒㄧㄚˋ ㄧˋ ㄎㄜˋ。</span>
+          <p class="course-progress" id="course-progress" aria-live="polite"></p>
+          <div class="lesson-list" id="lesson-list" aria-label="課程列表"></div>
+          <p class="progress-notice" id="progress-notice" role="status">學習進度會保存在這台裝置。</p>
           <div class="math-mode" id="math-mode" hidden aria-label="選擇數學練習類型">
-            <p class="math-mode-title">選一種數學挑戰<small class="zhuyin">ㄒㄩㄢˇ ㄧˋ ㄓㄨㄥˇ ㄕㄨˋ ㄒㄩㄝˊ ㄊㄧㄠˇ ㄓㄢˋ</small></p>
+            <p class="math-mode-title">數學加碼挑戰（不影響課程解鎖）<small class="zhuyin">ㄕㄨˋ ㄒㄩㄝˊ ㄐㄧㄚ ㄇㄚˇ ㄊㄧㄠˇ ㄓㄢˋ</small></p>
             <div class="math-mode-options">
               <button class="math-mode-button" type="button" data-mode="basic" aria-pressed="true">基礎練習<small class="zhuyin">ㄐㄧ ㄔㄨˇ ㄌㄧㄢˋ ㄒㄧˊ</small></button>
               <button class="math-mode-button" type="button" data-mode="contest" aria-pressed="false">卓越盃風格<small class="zhuyin">ㄓㄨㄛˊ ㄩㄝˋ ㄅㄟ ㄈㄥ ㄍㄜˊ</small></button>
             </div>
             <p class="math-mode-note" id="math-mode-note">練習加減法、數字和生活題。<small class="zhuyin" id="math-mode-note-zhuyin">ㄌㄧㄢˋ ㄒㄧˊ ㄐㄧㄚ ㄐㄧㄢˇ ㄈㄚˇ、ㄕㄨˋ ㄗˋ ㄏㄜˊ ㄕㄥ ㄏㄨㄛˊ ㄊㄧˊ。</small></p>
+            <button class="secondary-button" id="challenge-start-button" type="button">開始加碼闖關</button>
           </div>
-          <button class="primary-button" id="start-button" type="button">開始闖關 <small class="zhuyin">ㄎㄞ ㄕˇ ㄔㄨㄤˇ ㄍㄨㄢ</small><span aria-hidden="true">→</span></button>
+        </div>
+
+        <div class="lesson-state" id="lesson-state" hidden>
+          <button class="text-button" id="lesson-back-button" type="button">← 回課程列表</button>
+          <p class="lesson-kicker" id="lesson-kicker"></p>
+          <h3 id="lesson-title"></h3>
+          <p class="lesson-teaching" id="lesson-teaching"></p>
+          <p class="lesson-example" id="lesson-example"></p>
+          <p class="lesson-tip">慢慢讀完教學，再開始小測驗。</p>
+          <button class="primary-button" id="start-lesson-button" type="button">開始本課小測 <span aria-hidden="true">→</span></button>
         </div>
 
         <div class="question-state" id="question-state" hidden>
@@ -102,7 +115,6 @@
           </div>
           <div class="progress-track" role="progressbar" aria-label="答題進度" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progress-track"><span id="progress-fill"></span></div>
           <h3 class="question-text" id="question-text"></h3>
-          <p class="zhuyin question-zhuyin" id="question-zhuyin"></p>
           <div class="answer-list" id="answer-list"></div>
           <div class="answer-feedback" id="answer-feedback" aria-live="polite"></div>
           <button class="primary-button next-button" id="next-button" type="button" hidden><span id="next-label">下一題</span><small class="zhuyin" id="next-zhuyin">ㄒㄧㄚˋ ㄧˊ ㄊㄧˊ</small><span aria-hidden="true">→</span></button>
@@ -111,19 +123,20 @@
         <div class="result-state" id="result-state" hidden>
           <div class="result-star" aria-hidden="true">🌟</div>
           <h3 id="result-title">闖關完成！</h3>
-          <span class="zhuyin zhuyin--standalone result-title-zhuyin" id="result-title-zhuyin"></span>
+          <span class="zhuyin zhuyin--standalone result-title-zhuyin" id="result-title-zhuyin" hidden></span>
           <p class="result-score" id="result-score"></p>
           <p id="result-message"></p>
-          <span class="zhuyin zhuyin--standalone result-message-zhuyin" id="result-message-zhuyin"></span>
+          <span class="zhuyin zhuyin--standalone result-message-zhuyin" id="result-message-zhuyin" hidden></span>
           <div class="missed-box" id="missed-box" hidden>
             <strong>再練習看看：<small class="zhuyin">ㄗㄞˋ ㄌㄧㄢˋ ㄒㄧˊ ㄎㄢˋ ㄎㄢˋ</small></strong>
             <ul id="missed-list"></ul>
           </div>
           <button class="primary-button" id="retry-button" type="button"><span>再玩一次</span><small class="zhuyin">ㄗㄞˋ ㄨㄢˊ ㄧˊ ㄘˋ</small><span aria-hidden="true">↻</span></button>
+          <button class="secondary-button course-return-button" id="course-return-button" type="button">回到課程列表</button>
         </div>
       </div>
       <p class="gentle-reminder">🌼 小提醒：可以和家人一起讀題，練習不需要趕時間。<span class="zhuyin">ㄒㄧㄠˇ ㄊㄧˊ ㄒㄧㄥˇ：ㄎㄜˇ ㄧˇ ㄏㄜˊ ㄐㄧㄚ ㄖㄣˊ ㄧˋ ㄑㄧˇ ㄉㄨˊ ㄊㄧˊ，ㄌㄧㄢˋ ㄒㄧˊ ㄅㄨˋ ㄒㄩ ㄧㄠˋ ㄍㄢˇ ㄕˊ ㄐㄧㄢ。</span></p>
-      <p class="zhuyin-help">每題的注音都在國字下方，可以跟著注音慢慢讀喔！<span class="zhuyin">ㄇㄟˇ ㄊㄧˊ ㄉㄜ˙ ㄓㄨˋ ㄧㄣˋ ㄉㄡ ㄗㄞˋ ㄍㄨㄛˊ ㄗˋ ㄒㄧㄚˋ ㄈㄤ，ㄎㄜˇ ㄧˇ ㄍㄣ ㄓㄜ˙ ㄓㄨˋ ㄧㄣˋ ㄇㄢˋ ㄇㄢˋ ㄉㄨˊ ㄛ！</span></p>
+      <p class="zhuyin-help">每個國字旁邊都有注音，可以跟著注音慢慢讀喔！<span class="zhuyin">ㄇㄟˇ ㄍㄜ˙ ㄍㄨㄛˊ ㄗˋ ㄆㄤˊ ㄅㄧㄢ ㄉㄡ ㄧㄡˇ ㄓㄨˋ ㄧㄣˋ，ㄎㄜˇ ㄧˇ ㄍㄣ ㄓㄜ˙ ㄓㄨˋ ㄧㄣˋ ㄇㄢˋ ㄇㄢˋ ㄉㄨˊ ㄛ！</span></p>
     </section>
   </main>
 
