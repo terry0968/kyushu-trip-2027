@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFFCF6">
+  <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fffcf6;
+      --ink: #3e3a39;
+      --coral: #f2a497;
+      --yellow: #f6d27a;
+      --blue: #a8d3e6;
+      --green: #b9daa5;
+      --muted: #716b63;
+      font-family: "Huninn", "Noto Sans TC", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 22px 14px 40px; font-size: 16px; line-height: 1.6; }
+    main { width: min(760px, 100%); margin: 0 auto; }
+    h1 { margin: 0; font-size: clamp(26px, 6vw, 36px); }
+    h2 { margin: 0 0 10px; font-size: 21px; }
+    p { margin: 0; }
+    .subtitle { margin: 3px 0 18px; color: var(--muted); }
+    .card { margin-top: 15px; border: 3px solid var(--ink); border-radius: 22px; background: #fff; box-shadow: 4px 4px 0 var(--ink); padding: 18px; }
+    .rate { background: #eaf5f8; }
+    .rate strong { font-size: 21px; }
+    .muted, .hint { color: var(--muted); font-size: 13px; }
+    form { display: grid; gap: 12px; }
+    label { display: grid; gap: 4px; font-weight: 700; }
+    input { min-width: 0; width: 100%; min-height: 48px; border: 2px solid var(--ink); border-radius: 12px; background: var(--paper); padding: 9px 12px; color: var(--ink); font: inherit; }
+    input:focus-visible, button:focus-visible, a:focus-visible { outline: 3px dashed #527b65; outline-offset: 3px; }
+    .amount-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); padding: 9px 16px; color: var(--ink); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+    .button:hover { background: var(--green); }
+    .button:disabled { cursor: wait; opacity: .65; }
+    .button--secondary { background: var(--blue); }
+    .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 4px; }
+    .status { min-height: 25px; margin-top: 5px; font-size: 14px; }
+    .status[data-kind="error"] { color: #a13e35; }
+    .status[data-kind="success"] { color: #356a46; }
+    .totals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .total { border: 2px solid var(--ink); border-radius: 14px; background: #fff4d8; padding: 10px; }
+    .total span, .total strong { display: block; }
+    .total strong { font-size: 20px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid #d6cec1; padding: 8px 7px; text-align: left; white-space: nowrap; }
+    th { background: #eaf5f8; }
+    .empty { color: var(--muted); padding: 8px 0; }
+    .login { display: grid; gap: 12px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 480px) {
+      .card { padding: 15px; }
+      .amount-grid { grid-template-columns: 1fr; }
+      .totals { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>九州家族旅行記帳</h1>
+      <p class="subtitle">記下旅途中每一筆花費，資料同步保存在私人 Google 試算表。</p>
+    </header>
+
+    <section class="card" id="login-card" aria-labelledby="login-title">
+      <h2 id="login-title">開啟家庭記帳</h2>
+      <p class="hint">輸入 Apps Script 初始化時提供的存取金鑰。此金鑰不會放在公開旅遊網站。</p>
+      <form class="login" id="login-form">
+        <label for="access-key">家庭記帳存取金鑰
+          <input id="access-key" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="button" type="submit">連線到記帳表</button>
+      </form>
+      <p class="status" id="login-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div id="tracker" hidden>
+      <section class="card rate" aria-live="polite">
+        <h2>玉山銀行日圓牌告</h2>
+        <p>日圓現金賣出：<strong id="rate-value">讀取中…</strong> TWD / JPY</p>
+        <p class="hint">記帳時會重新讀取玉山銀行牌告並保存該筆匯率。實際換匯金額依付款方式與銀行交易為準。</p>
+      </section>
+
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">新增一筆支出</h2>
+        <form id="expense-form">
+          <label for="item">購買品名
+            <input id="item" name="item" maxlength="120" placeholder="例如：熊本熊玩偶" autocomplete="off" required>
+          </label>
+          <p class="hint">購買時間會在送出時自動記錄（台灣時間）。輸入日幣或台幣其中一欄，另一欄會依玉山銀行匯率換算。</p>
+          <div class="amount-grid">
+            <label for="jpy">日幣金額（JPY）
+              <input id="jpy" name="jpy" type="number" min="1" step="1" inputmode="decimal" placeholder="例如：1200" required>
+            </label>
+            <label for="twd">台幣金額（TWD）
+              <input id="twd" name="twd" type="number" min="1" step="1" inputmode="decimal" placeholder="自動換算，也可直接輸入" required>
+            </label>
+          </div>
+          <div class="actions">
+            <button class="button" id="save-button" type="submit">儲存到 Google 試算表</button>
+            <button class="button button--secondary" id="refresh-button" type="button">重新讀取匯率與紀錄</button>
+          </div>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="summary-title">
+        <h2 id="summary-title">旅費累計</h2>
+        <div class="totals">
+          <div class="total"><span>日幣合計</span><strong id="total-jpy">¥0</strong></div>
+          <div class="total"><span>台幣合計</span><strong id="total-twd">NT$0</strong></div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="entries-title">
+        <h2 id="entries-title">最近 30 筆紀錄</h2>
+        <p class="empty" id="empty-state">目前還沒有支出紀錄。</p>
+        <div class="table-wrap" id="table-wrap" hidden>
+          <table>
+            <thead><tr><th>購買時間</th><th>品名</th><th>日幣</th><th>台幣</th><th>匯率</th><th>匯率來源</th></tr></thead>
+            <tbody id="entries"></tbody>
+          </table>
+        </div>
+        <p class="actions"><a class="button button--secondary" id="sheet-link" href="#" target="_blank" rel="noopener noreferrer">開啟 Google 試算表</a></p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    "use strict";
+
+    const loginForm = document.getElementById("login-form");
+    const keyInput = document.getElementById("access-key");
+    const loginStatus = document.getElementById("login-status");
+    const tracker = document.getElementById("tracker");
+    const loginCard = document.getElementById("login-card");
+    const jpyInput = document.getElementById("jpy");
+    const twdInput = document.getElementById("twd");
+    const formStatus = document.getElementById("form-status");
+    let accessKey = "";
+    let exchangeRate = 0;
+    let inputCurrency = "JPY";
+    let isSaving = false;
+
+    function setStatus(element, message, kind) {
+      element.textContent = message;
+      element.dataset.kind = kind || "";
+    }
+
+    function formatMoney(value, currency) {
+      return new Intl.NumberFormat("zh-TW", {
+        maximumFractionDigits: 0
+      }).format(value) + (currency === "JPY" ? " 円" : " 元");
+    }
+
+    function loadDashboard(successMessage) {
+      document.getElementById("refresh-button").disabled = true;
+      setStatus(formStatus, "正在讀取玉山銀行匯率與試算表…");
+      google.script.run
+        .withSuccessHandler(function (data) {
+          exchangeRate = data.rate.value;
+          document.getElementById("rate-value").textContent = exchangeRate.toFixed(4);
+          document.getElementById("total-jpy").textContent = "¥" + formatMoney(data.totals.jpy, "JPY").replace(" 円", "");
+          document.getElementById("total-twd").textContent = "NT$" + formatMoney(data.totals.twd, "TWD").replace(" 元", "");
+          document.getElementById("sheet-link").href = data.spreadsheetUrl;
+          renderEntries(data.entries);
+          document.getElementById("refresh-button").disabled = false;
+          setStatus(formStatus, successMessage || "匯率已更新；存檔時會再查詢一次。", "success");
+        })
+        .withFailureHandler(function (error) {
+          document.getElementById("refresh-button").disabled = false;
+          const message = error && error.message ? error.message : "發生未知錯誤。";
+          setStatus(formStatus, successMessage
+            ? successMessage + " 但重新載入資料失敗：" + message
+            : message, "error");
+          if (/存取金鑰/.test(message)) {
+            tracker.hidden = true;
+            loginCard.hidden = false;
+            setStatus(loginStatus, message, "error");
+          }
+        })
+        .getExpenseDashboard(accessKey);
+    }
+
+    function renderEntries(entries) {
+      const body = document.getElementById("entries");
+      body.replaceChildren();
+      document.getElementById("empty-state").hidden = entries.length > 0;
+      document.getElementById("table-wrap").hidden = entries.length === 0;
+      entries.forEach(function (entry) {
+        const row = document.createElement("tr");
+        [entry.time, entry.item, "¥" + Math.round(entry.jpy).toLocaleString("zh-TW"),
+          "NT$" + Math.round(entry.twd).toLocaleString("zh-TW"), entry.rate.toFixed(4),
+          entry.source
+        ].forEach(function (value) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.append(cell);
+        });
+        body.append(row);
+      });
+    }
+
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      accessKey = keyInput.value.trim();
+      if (!accessKey) return;
+      loginCard.hidden = true;
+      tracker.hidden = false;
+      loadDashboard();
+    });
+
+    jpyInput.addEventListener("input", function () {
+      inputCurrency = "JPY";
+      const amount = Number(jpyInput.value);
+      twdInput.value = amount > 0 && exchangeRate ? String(Math.round(amount * exchangeRate)) : "";
+    });
+
+    twdInput.addEventListener("input", function () {
+      inputCurrency = "TWD";
+      const amount = Number(twdInput.value);
+      jpyInput.value = amount > 0 && exchangeRate ? String(Math.round(amount / exchangeRate)) : "";
+    });
+
+    document.getElementById("expense-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (isSaving) return;
+
+      const amount = Number(inputCurrency === "JPY" ? jpyInput.value : twdInput.value);
+      const item = document.getElementById("item").value.trim();
+      if (!item || !Number.isFinite(amount) || amount <= 0) {
+        setStatus(formStatus, "請填寫品名與有效金額。", "error");
+        return;
+      }
+
+      isSaving = true;
+      const saveButton = document.getElementById("save-button");
+      saveButton.disabled = true;
+      setStatus(formStatus, "正在取得最新玉山銀行匯率並儲存…");
+      google.script.run
+        .withSuccessHandler(function (saved) {
+          isSaving = false;
+          saveButton.disabled = false;
+          document.getElementById("expense-form").reset();
+          inputCurrency = "JPY";
+          const successMessage = "已記錄「" + saved.item + "」：¥" +
+            Math.round(saved.jpy).toLocaleString("zh-TW") + "（NT$" +
+            Math.round(saved.twd).toLocaleString("zh-TW") + "），匯率 " +
+            saved.rate.toFixed(4) + "（" + saved.source + "）。";
+          loadDashboard(successMessage);
+        })
+        .withFailureHandler(function (error) {
+          isSaving = false;
+          saveButton.disabled = false;
+          const message = error && error.message ? error.message : "儲存失敗，請重試。";
+          setStatus(formStatus, message, "error");
+        })
+        .saveExpense(accessKey, {
+          item: item,
+          currency: inputCurrency,
+          amount: amount
+        });
+    });
+
+    document.getElementById("refresh-button").addEventListener("click", loadDashboard);
+  </script>
+</body>
+</html>

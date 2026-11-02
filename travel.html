@@ -208,6 +208,19 @@
     .map-list-button:hover { background: var(--green); }
     .map-list-button svg { width: 20px; height: 20px; flex: 0 0 auto; }
     .map-sync-note { margin-top: 12px; border: 2px dashed var(--ink); border-radius: 14px; background: #fff4d8; padding: 11px 14px; font-size: 13px; }
+    .expense-card { border: var(--line); border-radius: var(--radius); background: #f5f8ef; box-shadow: var(--shadow); padding: clamp(18px, 4vw, 25px); }
+    .expense-card h3 { margin: 0 0 5px; font-size: 21px; }
+    .expense-card p { margin: 0; color: #605b55; font-size: 14px; }
+    .expense-setup { margin-top: 12px; border: 2px dashed var(--ink); border-radius: 14px; background: #fff4d8; padding: 12px 15px; font-size: 14px; }
+    .expense-setup ol { margin: 6px 0 0; padding-left: 21px; }
+    .expense-config { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: end; gap: 9px; margin-top: 15px; }
+    .expense-config label { display: grid; gap: 4px; font-size: 14px; font-weight: 700; }
+    .expense-config input { width: 100%; min-height: 44px; border: 2px solid var(--ink); border-radius: 12px; background: white; padding: 7px 10px; font: inherit; }
+    .expense-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); padding: 7px 14px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+    .expense-button:hover { background: var(--green); }
+    .expense-button:disabled { cursor: not-allowed; opacity: .6; }
+    .expense-status { min-height: 22px; margin-top: 8px !important; color: var(--muted) !important; font-size: 13px !important; }
+    .expense-status[data-kind="error"] { color: #9c3d35 !important; }
     .notice { margin-top: 18px; background: #fff4d8; padding: 13px 16px; font-size: 14px; }
     footer { border-top: var(--line); padding: 22px 16px 30px; text-align: center; font-size: 14px; }
     .footer-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
@@ -234,6 +247,8 @@
       .map-list-actions { align-items: stretch; }
       .map-list-button { flex: 1 1 180px; }
       .tax-grid { grid-template-columns: 1fr; }
+      .expense-config { grid-template-columns: 1fr 1fr; }
+      .expense-config label { grid-column: 1 / -1; }
     }
     @media (max-width: 520px) {
       .wrap { width: min(100% - 24px, 1080px); }
@@ -276,7 +291,7 @@
     </a>
     <nav aria-label="主選單">
       <ul class="nav-links">
-        <li><a href="#home">首頁</a></li><li><a href="#flights">航班</a></li><li><a href="#itinerary">行程</a></li><li><a href="#map-list">地圖清單</a></li><li><a href="#todo">待辦</a></li><li><a href="#stay">住宿</a></li><li><a href="#tax-free">退稅新制</a></li>
+        <li><a href="#home">首頁</a></li><li><a href="#flights">航班</a></li><li><a href="#itinerary">行程</a></li><li><a href="#map-list">地圖清單</a></li><li><a href="#expense">旅費記帳</a></li><li><a href="#todo">待辦</a></li><li><a href="#stay">住宿</a></li><li><a href="#tax-free">退稅新制</a></li>
       </ul>
     </nav>
   </header>
@@ -384,6 +399,34 @@
         </div>
       </div>
       <p class="map-sync-note">清單內容由 Google 地圖管理。你之後在 Google 地圖新增或移除地點後，從這裡重新開啟即可查看最新清單；本網站不會另存一份地點資料，因此不會因複製資料而過期。</p>
+    </section>
+
+    <section class="section" id="expense" aria-labelledby="expense-title">
+      <div class="section-heading">
+        <h2 id="expense-title"><span class="dot dot--yellow"></span>旅費記帳</h2>
+        <p class="section-note">Google 試算表・玉山銀行日圓匯率</p>
+      </div>
+      <div class="expense-card">
+        <h3>把旅途花費記下來</h3>
+        <p>記錄購買品名與日幣、台幣金額；時間由系統自動記錄，並依玉山銀行日圓現金賣出牌告換算。</p>
+        <div class="expense-setup">
+          <strong>首次使用設定（需用自己的 Google 帳號授權一次）</strong>
+          <ol>
+            <li>到 <a href="https://script.google.com/home/start" target="_blank" rel="noopener noreferrer">Google Apps Script</a> 建立新專案，新增程式檔並貼上 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Code.gs" target="_blank" rel="noopener noreferrer">Code.gs</a> 與 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Index.html" target="_blank" rel="noopener noreferrer">Index.html</a> 的內容。</li>
+            <li>執行 <code>setupExpenseTracker</code> 並授權以建立試算表；再執行 <code>authorizeExpenseTracker</code> 授權讀取玉山銀行匯率。執行記錄會提供試算表網址及私密存取金鑰。</li>
+            <li>部署為「網頁應用程式」，執行身分選「我」；家庭成員需登入 Google 帳戶使用時，可選「任何 Google 帳戶」。複製部署網址與存取金鑰，填入下方。</li>
+          </ol>
+        </div>
+        <form class="expense-config" id="expense-config-form">
+          <label for="expense-app-url">Apps Script 網頁應用程式網址
+            <input id="expense-app-url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" required>
+          </label>
+          <button class="expense-button" type="submit">儲存記帳網址</button>
+          <a class="expense-button" id="expense-open" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">開啟記帳頁</a>
+        </form>
+        <p class="expense-status" id="expense-config-status" role="status" aria-live="polite">填入部署網址後，即可開啟記帳表單。</p>
+        <p class="expense-status">存取金鑰只在記帳頁輸入，不要貼到公開網頁或 GitHub。記帳頁會在存檔時讀取玉山銀行最新日圓現金賣出匯率並保存匯率快照。</p>
+      </div>
     </section>
 
     <section class="section" id="todo" aria-labelledby="todo-title">
@@ -672,6 +715,70 @@
     }
     updateCountdown();
     window.setInterval(updateCountdown, 60000);
+
+    const expenseConfigForm = document.getElementById("expense-config-form");
+    const expenseUrlInput = document.getElementById("expense-app-url");
+    const expenseOpenLink = document.getElementById("expense-open");
+    const expenseConfigStatus = document.getElementById("expense-config-status");
+    const expenseUrlStorageKey = "kyushu-family-trip-expense-app-url";
+
+    function setExpenseAppUrl(value) {
+      expenseOpenLink.href = value;
+      expenseOpenLink.setAttribute("aria-disabled", "false");
+      expenseConfigStatus.textContent = "記帳網址已設定；按「開啟記帳頁」開始使用。";
+      expenseConfigStatus.removeAttribute("data-kind");
+    }
+
+    try {
+      const savedExpenseUrl = localStorage.getItem(expenseUrlStorageKey);
+      if (savedExpenseUrl) {
+        expenseUrlInput.value = savedExpenseUrl;
+        setExpenseAppUrl(savedExpenseUrl);
+      }
+    } catch (error) {
+      expenseConfigStatus.textContent = "無法讀取此裝置的記帳網址設定，請重新輸入部署網址。";
+      expenseConfigStatus.dataset.kind = "error";
+      console.error("無法讀取記帳頁網址設定。", error);
+    }
+
+    expenseOpenLink.addEventListener("click", (event) => {
+      if (expenseOpenLink.getAttribute("aria-disabled") === "true") {
+        event.preventDefault();
+        expenseUrlInput.focus();
+        expenseConfigStatus.textContent = "請先貼上並儲存 Apps Script 部署網址。";
+      }
+    });
+
+    expenseConfigForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let parsedUrl;
+      try {
+        parsedUrl = new URL(expenseUrlInput.value.trim());
+      } catch (error) {
+        expenseConfigStatus.textContent = "請輸入有效的 Apps Script 網頁應用程式網址。";
+        expenseConfigStatus.dataset.kind = "error";
+        return;
+      }
+      if (parsedUrl.protocol !== "https:" ||
+          parsedUrl.hostname !== "script.google.com" ||
+          !parsedUrl.pathname.includes("/macros/") ||
+          !/\/s\/[\w-]+\/exec$/.test(parsedUrl.pathname)) {
+        expenseConfigStatus.textContent = "網址需為 Google Apps Script 部署後的 https://script.google.com/.../exec 網址。";
+        expenseConfigStatus.dataset.kind = "error";
+        return;
+      }
+
+      try {
+        localStorage.setItem(expenseUrlStorageKey, parsedUrl.href);
+      } catch (error) {
+        expenseConfigStatus.textContent = "無法在此裝置保存記帳網址；請確認瀏覽器儲存空間設定。";
+        expenseConfigStatus.dataset.kind = "error";
+        console.error("無法儲存記帳頁網址設定。", error);
+        return;
+      }
+      expenseUrlInput.value = parsedUrl.href;
+      setExpenseAppUrl(parsedUrl.href);
+    });
 
     const todoGrid = document.getElementById("todo-grid");
     const storageNote = document.getElementById("storage-note");
