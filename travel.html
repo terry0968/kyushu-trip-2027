@@ -182,6 +182,32 @@
     .stay-meta dd { margin: 2px 0 0; color: #605b55; font-size: 14px; }
     .hotel-list { margin: 5px 0 0; padding-left: 20px; }
     .hotel-list li + li { margin-top: 4px; }
+    .stay-card--primary { background: #f5f8ef; }
+    .stay-status { display: inline-block; border: 2px solid var(--ink); border-radius: 999px; background: var(--green); padding: 2px 10px; font-size: 13px; font-weight: 700; }
+    .stay-status--backup { background: #fff4d8; }
+    .hotel-intro { margin: 0 0 12px; color: #605b55; font-size: 14px; }
+    .hotel-primary { margin: 0 0 12px; border: 2px solid var(--ink); border-radius: 16px; background: var(--paper); padding: 13px; }
+    .hotel-primary h4 { margin: 0 0 4px; font-size: 18px; }
+    .hotel-primary p { margin: 0; color: #605b55; font-size: 14px; }
+    .hotel-primary .hotel-map { display: inline-block; margin-top: 6px; font-size: 14px; }
+    .stay-meta .hotel-alternatives { border-top: 2px dashed #d3ccbf; padding-top: 9px; }
+    .tax-summary { margin-bottom: 14px; border: var(--line); border-radius: var(--radius); background: #fff4d8; box-shadow: var(--shadow); padding: 15px 18px; }
+    .tax-summary strong { font-size: 17px; }
+    .tax-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .tax-card { border: var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: var(--shadow); padding: 17px; }
+    .tax-card h3 { margin: 0 0 9px; font-size: 19px; }
+    .tax-card ol, .tax-card ul { margin: 0; padding-left: 21px; }
+    .tax-card li + li { margin-top: 6px; }
+    .tax-warning { margin-top: 14px; border: 2px dashed var(--ink); border-radius: 14px; background: #fce9e4; padding: 12px 15px; font-size: 14px; }
+    .tax-sources { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; font-size: 14px; }
+    .map-list-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; border: var(--line); border-radius: var(--radius); background: #eaf5f8; box-shadow: var(--shadow); padding: clamp(18px, 4vw, 28px); }
+    .map-list-card h3 { margin: 0 0 5px; font-size: 21px; }
+    .map-list-card p { margin: 0; color: #605b55; font-size: 14px; }
+    .map-list-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .map-list-button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 7px; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); padding: 8px 15px; font-weight: 700; text-decoration: none; }
+    .map-list-button:hover { background: var(--green); }
+    .map-list-button svg { width: 20px; height: 20px; flex: 0 0 auto; }
+    .map-sync-note { margin-top: 12px; border: 2px dashed var(--ink); border-radius: 14px; background: #fff4d8; padding: 11px 14px; font-size: 13px; }
     .notice { margin-top: 18px; background: #fff4d8; padding: 13px 16px; font-size: 14px; }
     footer { border-top: var(--line); padding: 22px 16px 30px; text-align: center; font-size: 14px; }
     .footer-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
@@ -204,6 +230,10 @@
       .nav-links { width: 100%; justify-content: space-between; overflow-x: auto; }
       .nav-links a { padding: 4px 8px; font-size: 13px; white-space: nowrap; }
       .section { scroll-margin-top: 105px; }
+      .map-list-card { grid-template-columns: 1fr; }
+      .map-list-actions { align-items: stretch; }
+      .map-list-button { flex: 1 1 180px; }
+      .tax-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 520px) {
       .wrap { width: min(100% - 24px, 1080px); }
@@ -246,7 +276,7 @@
     </a>
     <nav aria-label="主選單">
       <ul class="nav-links">
-        <li><a href="#home">首頁</a></li><li><a href="#flights">航班</a></li><li><a href="#itinerary">行程</a></li><li><a href="#todo">待辦</a></li><li><a href="#stay">住宿</a></li><li><a href="https://terry0968.github.io/elementary-learning/">Elementary</a></li>
+        <li><a href="#home">首頁</a></li><li><a href="#flights">航班</a></li><li><a href="#itinerary">行程</a></li><li><a href="#map-list">地圖清單</a></li><li><a href="#todo">待辦</a></li><li><a href="#stay">住宿</a></li><li><a href="#tax-free">退稅新制</a></li>
       </ul>
     </nav>
   </header>
@@ -331,10 +361,29 @@
     <section class="section" id="itinerary" aria-labelledby="itinerary-title">
       <div class="section-heading">
         <h2 id="itinerary-title"><span class="dot dot--green"></span>每日行程</h2>
-        <p class="section-note">A 方案・大眾運輸＋計程車；「必去」是當日主軸</p>
       </div>
       <div class="tabs" role="tablist" aria-label="選擇旅行日期" id="day-tabs"></div>
       <div id="day-panels"></div>
+    </section>
+
+    <section class="section" id="map-list" aria-labelledby="map-list-title">
+      <div class="section-heading">
+        <h2 id="map-list-title"><span class="dot dot--blue"></span>Google 地圖清單</h2>
+        <p class="section-note">日本九州・Google Maps 共用清單</p>
+      </div>
+      <div class="map-list-card">
+        <div>
+          <h3>打開「日本九州」地點收藏</h3>
+          <p>在 Google 地圖查看清單內的旅宿、景點、餐廳與其他收藏地點。</p>
+        </div>
+        <div class="map-list-actions">
+          <a class="map-list-button" href="https://maps.app.goo.gl/TvmHiemJEfPmDNXr5" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" fill="#F2A497" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="#FFFCF6" stroke="currentColor" stroke-width="2"/></svg>
+            開啟即時地圖清單
+          </a>
+        </div>
+      </div>
+      <p class="map-sync-note">清單內容由 Google 地圖管理。你之後在 Google 地圖新增或移除地點後，從這裡重新開啟即可查看最新清單；本網站不會另存一份地點資料，因此不會因複製資料而過期。</p>
     </section>
 
     <section class="section" id="todo" aria-labelledby="todo-title">
@@ -347,26 +396,73 @@
     </section>
 
     <section class="section" id="stay" aria-labelledby="stay-title">
-      <div class="section-heading"><h2 id="stay-title"><span class="dot dot--coral"></span>住宿資訊</h2><p class="section-note">參考行程列出候選旅宿，最後預訂以你的確認為準</p></div>
+      <div class="section-heading"><h2 id="stay-title"><span class="dot dot--coral"></span>住宿資訊</h2><p class="section-note">暫定主住宿；其他旅宿列為備案</p></div>
       <div class="stay-grid">
-        <article class="stay-card">
+        <article class="stay-card stay-card--primary">
           <div class="stay-city"><h3>熊本・3 晚</h3><span class="stay-date">2/28 入住 → 3/3 退房</span></div>
+          <p class="hotel-intro">熊本市區的暫定住宿選擇，抵達熊本後先入住，方便安排市區景點與阿蘇一日遊。</p>
+          <div class="hotel-primary">
+            <h4><span class="stay-status">暫定主選</span> KOKO HOTEL Premier 熊本</h4>
+            <p>飯店與桜町巴士總站、商場相連，從機場搭巴士抵達後轉往住宿較方便；下樓即可找到餐飲與購物選擇，適合抵達日及攜帶行李的家庭。</p>
+            <a class="map-link hotel-map" href="https://www.google.com/maps/search/?api=1&amp;query=KOKO%20HOTEL%20Premier%20Kumamoto" target="_blank" rel="noopener noreferrer">在 Google 地圖查看飯店</a>
+          </div>
           <dl class="stay-meta">
-            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=KOKO%20HOTEL%20Premier%20%E7%86%8A%E6%9C%AC" target="_blank" rel="noopener noreferrer">KOKO HOTEL Premier 熊本</a></strong>：與桜町巴士總站相連，抵達後少搬行李。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=CANDEO%20HOTELS%20%E7%86%8A%E6%9C%AC%E6%96%B0%E5%B8%82%E8%A1%97" target="_blank" rel="noopener noreferrer">CANDEO HOTELS 熊本新市街</a></strong>：辛島町電車站步行約 3 分鐘。</li></ul></dd></div>
+            <div class="hotel-alternatives"><dt><span class="stay-status stay-status--backup">備案</span></dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=CANDEO%20HOTELS%20Kumamoto%20Shinshigai" target="_blank" rel="noopener noreferrer">CANDEO HOTELS 熊本新市街</a></strong>：位於新市街商圈，可作為市中心住宿替代選擇。</li></ul></dd></div>
             <div><dt>入住與地址</dt><dd>時間、地址尚待確認；辦理入住前可先詢問行李寄放。</dd></div>
             <div><dt>住宿提醒</dt><dd>素泊方案；熊本市住宿稅約每人每晚 ¥200。</dd></div>
           </dl>
         </article>
-        <article class="stay-card">
+        <article class="stay-card stay-card--primary">
           <div class="stay-city"><h3>福岡・3 晚</h3><span class="stay-date" style="background:var(--coral)">3/3 入住 → 3/6 退房</span></div>
+          <p class="hotel-intro">福岡住宿安排在博多祇園一帶，方便搭地鐵往返博多站、中洲及市區景點。</p>
+          <div class="hotel-primary">
+            <h4><span class="stay-status">暫定主選</span> 西鐵 CROOM 博多祇園</h4>
+            <p>鄰近地鐵櫛田神社前站，前往博多站及中洲較方便；位置適合以地鐵、步行和計程車串接市區行程。</p>
+            <a class="map-link hotel-map" href="https://www.google.com/maps/search/?api=1&amp;query=Nishitetsu%20Hotel%20Croom%20Hakata%20Gion%20Kushida%20Shrine" target="_blank" rel="noopener noreferrer">在 Google 地圖查看飯店</a>
+          </div>
           <dl class="stay-meta">
-            <div><dt>候選旅宿</dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Richmond%20Hotel%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">Richmond Hotel 福岡天神</a></strong>：天神南站出口步行約 1 分鐘。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Tokyu%20Stay%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">東急 STAY 福岡天神</a></strong>：鄰近天神南站，客房設有洗衣烘衣設備。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cross%20Life%20Hakata%20Tenjin" target="_blank" rel="noopener noreferrer">Cross Life 博多天神</a></strong>：天神南站步行可達，館內有大浴場。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Nishitetsu%20Hotel%20Croom%20Hakata%20Gion" target="_blank" rel="noopener noreferrer">西鐵 CROOM 博多祇園</a></strong>：櫛田神社前站旁，往博多交通方便。</li></ul></dd></div>
+            <div class="hotel-alternatives"><dt><span class="stay-status stay-status--backup">備案</span></dt><dd><ul class="hotel-list"><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Richmond%20Hotel%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">Richmond Hotel 福岡天神</a></strong>：天神南站周邊。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Tokyu%20Stay%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer">東急 STAY 福岡天神</a></strong>：可作為天神住宿備選。</li><li><strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cross%20Life%20Hakata%20Tenjin" target="_blank" rel="noopener noreferrer">Cross Life 博多天神</a></strong>：位於博多天神一帶。</li></ul></dd></div>
             <div><dt>入住與地址</dt><dd>時間、地址尚待確認；熊本至福岡移動日確認行李寄送安排。</dd></div>
             <div><dt>住宿提醒</dt><dd>福岡住宿稅約每人每晚 ¥200。博多交通轉乘較便捷；天神方便逛街及夜間用餐。</dd></div>
           </dl>
         </article>
       </div>
       <aside class="notice"><strong>行程提醒：</strong>阿蘇火山管制、熊本城修復開放狀況、花期、交通班次與票價可能變動，請於出發前再次查詢官方資訊。</aside>
+    </section>
+
+    <section class="section" id="tax-free" aria-labelledby="tax-free-title">
+      <div class="section-heading">
+        <h2 id="tax-free-title"><span class="dot dot--yellow"></span>日本退稅新制</h2>
+        <p class="section-note">適用於 2026 年 11 月 1 日起的購買</p>
+      </div>
+      <div class="tax-summary">
+        <strong>改為「先以含稅價購買，出境經海關確認攜出後，再退還消費稅相當額」。</strong>
+        <span>　你的行程在 2027 年 2–3 月，購物時將適用新制。</span>
+      </div>
+      <div class="tax-grid">
+        <article class="tax-card">
+          <h3>購物時與退稅資格</h3>
+          <ol>
+            <li>在有辦理免稅的新制免稅店購買時，先付含稅價格；請向店員確認退稅方式、退款時間與可能的手續費。</li>
+            <li>原則上，同一免稅店同一天的免稅商品未稅合計須達 ¥5,000。符合條件且由同一免稅手續櫃檯辦理時，才可合併多店購物金額計算。</li>
+            <li>購買時出示符合資格的護照等文件，並確認店家已完成免稅購買紀錄。</li>
+          </ol>
+        </article>
+        <article class="tax-card">
+          <h3>離境前要做的事</h3>
+          <ol>
+            <li>每筆購買須在購買日起 90 日內，於離境空港使用免稅手續設備出示護照，接受海關確認。</li>
+            <li>海關可能要求檢查商品；請把購買的免稅商品全部帶在身邊，並在托運行李前辦理。商品托運後無法再出示檢查。</li>
+            <li>通過確認後，依店家或受託業者的退款方式領回消費稅相當額；退款方式與時間依店家而異。</li>
+          </ol>
+        </article>
+      </div>
+      <aside class="tax-warning"><strong>重要提醒：</strong>同一筆收據裡任何一件免稅商品未能出示，該筆收據上的商品都可能無法完成退稅。食品、化妝品等消耗品的特殊封裝已取消，但若在日本境內食用或使用，因無法完整攜出，不能就該商品取得退稅。請預留機場辦理時間，福岡機場也要在行李托運前完成確認。</aside>
+      <div class="tax-sources">
+        <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00021.html" target="_blank" rel="noopener noreferrer">觀光廳：旅客版退稅新制說明</a>
+        <a href="https://www.nta.go.jp/publication/pamph/shohi/menzei/201805/format/002.htm" target="_blank" rel="noopener noreferrer">國稅廳：退稅方式官方專頁與問答</a>
+        <a href="https://www.customs.go.jp/kaigairyoko/taxrefund/map.htm" target="_blank" rel="noopener noreferrer">日本海關：各空港免稅確認位置</a>
+      </div>
     </section>
   </main>
   <footer>
