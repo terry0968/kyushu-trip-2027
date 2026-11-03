@@ -213,12 +213,9 @@
     .expense-card p { margin: 0; color: #605b55; font-size: 14px; }
     .expense-setup { margin-top: 12px; border: 2px dashed var(--ink); border-radius: 14px; background: #fff4d8; padding: 12px 15px; font-size: 14px; }
     .expense-setup ol { margin: 6px 0 0; padding-left: 21px; }
-    .expense-config { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: end; gap: 9px; margin-top: 15px; }
-    .expense-config label { display: grid; gap: 4px; font-size: 14px; font-weight: 700; }
-    .expense-config input { width: 100%; min-height: 44px; border: 2px solid var(--ink); border-radius: 12px; background: white; padding: 7px 10px; font: inherit; }
     .expense-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); padding: 7px 14px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
     .expense-button:hover { background: var(--green); }
-    .expense-button:disabled { cursor: not-allowed; opacity: .6; }
+    .expense-actions { margin-top: 14px !important; }
     .expense-status { min-height: 22px; margin-top: 8px !important; color: var(--muted) !important; font-size: 13px !important; }
     .expense-status[data-kind="error"] { color: #9c3d35 !important; }
     .notice { margin-top: 18px; background: #fff4d8; padding: 13px 16px; font-size: 14px; }
@@ -247,8 +244,6 @@
       .map-list-actions { align-items: stretch; }
       .map-list-button { flex: 1 1 180px; }
       .tax-grid { grid-template-columns: 1fr; }
-      .expense-config { grid-template-columns: 1fr 1fr; }
-      .expense-config label { grid-column: 1 / -1; }
     }
     @media (max-width: 520px) {
       .wrap { width: min(100% - 24px, 1080px); }
@@ -409,22 +404,15 @@
       <div class="expense-card">
         <h3>把旅途花費記下來</h3>
         <p>記錄購買品名與日幣、台幣金額；時間由系統自動記錄，並依玉山銀行日圓現金賣出牌告換算。</p>
-        <div class="expense-setup">
-          <strong>首次使用設定（需用自己的 Google 帳號授權一次）</strong>
+        <details class="expense-setup">
+          <summary><strong>管理員設定（首次部署時才需要）</strong></summary>
           <ol>
             <li>到 <a href="https://script.google.com/home/start" target="_blank" rel="noopener noreferrer">Google Apps Script</a> 建立新專案：將 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Code.gs" target="_blank" rel="noopener noreferrer">Code.gs</a> 內容貼入程式檔；再按左側「檔案」旁的「＋」→「HTML」，檔名輸入 <code>Index</code>（系統會顯示為 Index.html），並貼入 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Index.html" target="_blank" rel="noopener noreferrer">Index.html</a> 的內容。請勿把 HTML 建成 .gs 程式檔。</li>
             <li>執行 <code>setupExpenseTracker</code> 並授權以建立試算表；再執行 <code>authorizeExpenseTracker</code> 授權讀取玉山銀行匯率。</li>
-            <li>部署為「網頁應用程式」，執行身分選「我」、存取權選「任何人」，再將部署網址填入下方。記帳頁會直接開啟，不需輸入金鑰。</li>
+            <li>部署為「網頁應用程式」，執行身分選「我」、存取權選「任何人」。其他家人不必輸入網址；若日後另建新部署，請更新本頁的記帳連結一次。</li>
           </ol>
-        </div>
-        <form class="expense-config" id="expense-config-form">
-          <label for="expense-app-url">Apps Script 網頁應用程式網址
-            <input id="expense-app-url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" required>
-          </label>
-          <button class="expense-button" type="submit">儲存記帳網址</button>
-          <a class="expense-button" id="expense-open" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">開啟記帳頁</a>
-        </form>
-        <p class="expense-status" id="expense-config-status" role="status" aria-live="polite">填入部署網址後，即可開啟記帳表單。</p>
+        </details>
+        <p class="expense-actions"><a class="expense-button" href="https://script.google.com/macros/s/AKfycbwRWqZqYZDQeBY1bLjynXMp80rWO2yMUYUV1TmX2tXhJeG2b4UV1_UR-nG-z_0SnZ4H/exec" target="_blank" rel="noopener noreferrer">開啟家庭記帳頁</a></p>
         <p class="expense-status">重要：任何取得記帳網址的人都能查看支出、開啟試算表並新增紀錄；請只分享給信任的家人。記帳頁會在存檔時讀取玉山銀行最新日圓現金賣出匯率並保存匯率快照。</p>
       </div>
     </section>
@@ -715,70 +703,6 @@
     }
     updateCountdown();
     window.setInterval(updateCountdown, 60000);
-
-    const expenseConfigForm = document.getElementById("expense-config-form");
-    const expenseUrlInput = document.getElementById("expense-app-url");
-    const expenseOpenLink = document.getElementById("expense-open");
-    const expenseConfigStatus = document.getElementById("expense-config-status");
-    const expenseUrlStorageKey = "kyushu-family-trip-expense-app-url";
-
-    function setExpenseAppUrl(value) {
-      expenseOpenLink.href = value;
-      expenseOpenLink.setAttribute("aria-disabled", "false");
-      expenseConfigStatus.textContent = "記帳網址已設定；按「開啟記帳頁」開始使用。";
-      expenseConfigStatus.removeAttribute("data-kind");
-    }
-
-    try {
-      const savedExpenseUrl = localStorage.getItem(expenseUrlStorageKey);
-      if (savedExpenseUrl) {
-        expenseUrlInput.value = savedExpenseUrl;
-        setExpenseAppUrl(savedExpenseUrl);
-      }
-    } catch (error) {
-      expenseConfigStatus.textContent = "無法讀取此裝置的記帳網址設定，請重新輸入部署網址。";
-      expenseConfigStatus.dataset.kind = "error";
-      console.error("無法讀取記帳頁網址設定。", error);
-    }
-
-    expenseOpenLink.addEventListener("click", (event) => {
-      if (expenseOpenLink.getAttribute("aria-disabled") === "true") {
-        event.preventDefault();
-        expenseUrlInput.focus();
-        expenseConfigStatus.textContent = "請先貼上並儲存 Apps Script 部署網址。";
-      }
-    });
-
-    expenseConfigForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      let parsedUrl;
-      try {
-        parsedUrl = new URL(expenseUrlInput.value.trim());
-      } catch (error) {
-        expenseConfigStatus.textContent = "請輸入有效的 Apps Script 網頁應用程式網址。";
-        expenseConfigStatus.dataset.kind = "error";
-        return;
-      }
-      if (parsedUrl.protocol !== "https:" ||
-          parsedUrl.hostname !== "script.google.com" ||
-          !parsedUrl.pathname.includes("/macros/") ||
-          !/\/s\/[\w-]+\/exec$/.test(parsedUrl.pathname)) {
-        expenseConfigStatus.textContent = "網址需為 Google Apps Script 部署後的 https://script.google.com/.../exec 網址。";
-        expenseConfigStatus.dataset.kind = "error";
-        return;
-      }
-
-      try {
-        localStorage.setItem(expenseUrlStorageKey, parsedUrl.href);
-      } catch (error) {
-        expenseConfigStatus.textContent = "無法在此裝置保存記帳網址；請確認瀏覽器儲存空間設定。";
-        expenseConfigStatus.dataset.kind = "error";
-        console.error("無法儲存記帳頁網址設定。", error);
-        return;
-      }
-      expenseUrlInput.value = parsedUrl.href;
-      setExpenseAppUrl(parsedUrl.href);
-    });
 
     const todoGrid = document.getElementById("todo-grid");
     const storageNote = document.getElementById("storage-note");
