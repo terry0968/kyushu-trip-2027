@@ -1,5 +1,4 @@
 const EXPENSE_SHEET_ID_PROPERTY = "EXPENSE_SPREADSHEET_ID";
-const EXPENSE_ACCESS_KEY_PROPERTY = "EXPENSE_ACCESS_KEY";
 const EXPENSE_TIME_ZONE = "Asia/Taipei";
 const EXPENSE_SHEET_NAME = "記帳明細";
 const ESUN_RATE_URL = "https://www.esunbank.com/zh-tw/personal/deposit/rate/forex/foreign-exchange-rates";
@@ -11,17 +10,9 @@ function doGet() {
 
 function setupExpenseTracker() {
   const spreadsheet = getExpenseSpreadsheet_();
-  const properties = PropertiesService.getScriptProperties();
-  let accessKey = properties.getProperty(EXPENSE_ACCESS_KEY_PROPERTY);
-
-  if (!accessKey) {
-    accessKey = Utilities.getUuid() + Utilities.getUuid();
-    properties.setProperty(EXPENSE_ACCESS_KEY_PROPERTY, accessKey);
-  }
-
   console.log("九州家族旅行試算表：" + spreadsheet.getUrl());
-  console.log("記帳頁面存取金鑰（請勿公開）：" + accessKey);
-  console.log("請將此 Apps Script 部署為網頁應用程式後，使用部署提供的網址。");
+  console.log("請將此 Apps Script 部署為執行身分為「我」、存取權為「任何人」的網頁應用程式。");
+  console.log("注意：任何取得部署網址的人都能查看及新增記帳資料。");
 }
 
 function authorizeExpenseTracker() {
@@ -29,8 +20,7 @@ function authorizeExpenseTracker() {
   console.log("已成功讀取玉山銀行日圓現金賣出匯率：" + rate.value);
 }
 
-function getExpenseDashboard(accessKey) {
-  requireAccessKey_(accessKey);
+function getExpenseDashboard() {
   const sheet = getExpenseSheet_();
   const lastRow = sheet.getLastRow();
   const rows = lastRow > 1
@@ -61,9 +51,7 @@ function getExpenseDashboard(accessKey) {
   };
 }
 
-function saveExpense(accessKey, input) {
-  requireAccessKey_(accessKey);
-
+function saveExpense(input) {
   if (!input || typeof input.item !== "string") {
     throw new Error("請輸入購買品名。");
   }
@@ -100,17 +88,6 @@ function saveExpense(accessKey, input) {
     rate: rate.value,
     source: rate.source
   };
-}
-
-function requireAccessKey_(accessKey) {
-  const expected = PropertiesService.getScriptProperties()
-    .getProperty(EXPENSE_ACCESS_KEY_PROPERTY);
-  if (!expected) {
-    throw new Error("尚未初始化記帳資料，請先執行 setupExpenseTracker。");
-  }
-  if (typeof accessKey !== "string" || accessKey !== expected) {
-    throw new Error("存取金鑰不正確，請確認後再試。");
-  }
 }
 
 function getExpenseSpreadsheet_() {

@@ -412,9 +412,9 @@
         <div class="expense-setup">
           <strong>首次使用設定（需用自己的 Google 帳號授權一次）</strong>
           <ol>
-            <li>到 <a href="https://script.google.com/home/start" target="_blank" rel="noopener noreferrer">Google Apps Script</a> 建立新專案，新增程式檔並貼上 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Code.gs" target="_blank" rel="noopener noreferrer">Code.gs</a> 與 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Index.html" target="_blank" rel="noopener noreferrer">Index.html</a> 的內容。</li>
-            <li>執行 <code>setupExpenseTracker</code> 並授權以建立試算表；再執行 <code>authorizeExpenseTracker</code> 授權讀取玉山銀行匯率。執行記錄會提供試算表網址及私密存取金鑰。</li>
-            <li>部署為「網頁應用程式」，執行身分選「我」；家庭成員需登入 Google 帳戶使用時，可選「任何 Google 帳戶」。複製部署網址與存取金鑰，填入下方。</li>
+            <li>到 <a href="https://script.google.com/home/start" target="_blank" rel="noopener noreferrer">Google Apps Script</a> 建立新專案：將 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Code.gs" target="_blank" rel="noopener noreferrer">Code.gs</a> 內容貼入程式檔；再按左側「檔案」旁的「＋」→「HTML」，檔名輸入 <code>Index</code>（系統會顯示為 Index.html），並貼入 <a href="https://github.com/terry0968/kyushu-trip-2027/blob/main/expense-tracker/Index.html" target="_blank" rel="noopener noreferrer">Index.html</a> 的內容。請勿把 HTML 建成 .gs 程式檔。</li>
+            <li>執行 <code>setupExpenseTracker</code> 並授權以建立試算表；再執行 <code>authorizeExpenseTracker</code> 授權讀取玉山銀行匯率。</li>
+            <li>部署為「網頁應用程式」，執行身分選「我」、存取權選「任何人」，再將部署網址填入下方。記帳頁會直接開啟，不需輸入金鑰。</li>
           </ol>
         </div>
         <form class="expense-config" id="expense-config-form">
@@ -425,7 +425,7 @@
           <a class="expense-button" id="expense-open" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">開啟記帳頁</a>
         </form>
         <p class="expense-status" id="expense-config-status" role="status" aria-live="polite">填入部署網址後，即可開啟記帳表單。</p>
-        <p class="expense-status">存取金鑰只在記帳頁輸入，不要貼到公開網頁或 GitHub。記帳頁會在存檔時讀取玉山銀行最新日圓現金賣出匯率並保存匯率快照。</p>
+        <p class="expense-status">重要：任何取得記帳網址的人都能查看支出、開啟試算表並新增紀錄；請只分享給信任的家人。記帳頁會在存檔時讀取玉山銀行最新日圓現金賣出匯率並保存匯率快照。</p>
       </div>
     </section>
 

@@ -53,7 +53,6 @@
     th, td { border-bottom: 1px solid #d6cec1; padding: 8px 7px; text-align: left; white-space: nowrap; }
     th { background: #eaf5f8; }
     .empty { color: var(--muted); padding: 8px 0; }
-    .login { display: grid; gap: 12px; }
     [hidden] { display: none !important; }
     @media (max-width: 480px) {
       .card { padding: 15px; }
@@ -66,22 +65,11 @@
   <main>
     <header>
       <h1>九州家族旅行記帳</h1>
-      <p class="subtitle">記下旅途中每一筆花費，資料同步保存在私人 Google 試算表。</p>
+      <p class="subtitle">記下旅途中每一筆花費，資料同步保存在家庭 Google 試算表。</p>
+      <p class="hint">提醒：此頁不需登入；任何取得記帳網址的人都能查看紀錄、開啟試算表並新增支出。</p>
     </header>
 
-    <section class="card" id="login-card" aria-labelledby="login-title">
-      <h2 id="login-title">開啟家庭記帳</h2>
-      <p class="hint">輸入 Apps Script 初始化時提供的存取金鑰。此金鑰不會放在公開旅遊網站。</p>
-      <form class="login" id="login-form">
-        <label for="access-key">家庭記帳存取金鑰
-          <input id="access-key" type="password" autocomplete="current-password" required>
-        </label>
-        <button class="button" type="submit">連線到記帳表</button>
-      </form>
-      <p class="status" id="login-status" role="status" aria-live="polite"></p>
-    </section>
-
-    <div id="tracker" hidden>
+    <div id="tracker">
       <section class="card rate" aria-live="polite">
         <h2>玉山銀行日圓牌告</h2>
         <p>日圓現金賣出：<strong id="rate-value">讀取中…</strong> TWD / JPY</p>
@@ -136,15 +124,9 @@
   <script>
     "use strict";
 
-    const loginForm = document.getElementById("login-form");
-    const keyInput = document.getElementById("access-key");
-    const loginStatus = document.getElementById("login-status");
-    const tracker = document.getElementById("tracker");
-    const loginCard = document.getElementById("login-card");
     const jpyInput = document.getElementById("jpy");
     const twdInput = document.getElementById("twd");
     const formStatus = document.getElementById("form-status");
-    let accessKey = "";
     let exchangeRate = 0;
     let inputCurrency = "JPY";
     let isSaving = false;
@@ -180,13 +162,8 @@
           setStatus(formStatus, successMessage
             ? successMessage + " 但重新載入資料失敗：" + message
             : message, "error");
-          if (/存取金鑰/.test(message)) {
-            tracker.hidden = true;
-            loginCard.hidden = false;
-            setStatus(loginStatus, message, "error");
-          }
         })
-        .getExpenseDashboard(accessKey);
+        .getExpenseDashboard();
     }
 
     function renderEntries(entries) {
@@ -207,15 +184,6 @@
         body.append(row);
       });
     }
-
-    loginForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      accessKey = keyInput.value.trim();
-      if (!accessKey) return;
-      loginCard.hidden = true;
-      tracker.hidden = false;
-      loadDashboard();
-    });
 
     jpyInput.addEventListener("input", function () {
       inputCurrency = "JPY";
@@ -262,7 +230,7 @@
           const message = error && error.message ? error.message : "儲存失敗，請重試。";
           setStatus(formStatus, message, "error");
         })
-        .saveExpense(accessKey, {
+        .saveExpense({
           item: item,
           currency: inputCurrency,
           amount: amount
@@ -270,6 +238,7 @@
     });
 
     document.getElementById("refresh-button").addEventListener("click", loadDashboard);
+    loadDashboard();
   </script>
 </body>
 </html>
